@@ -1,20 +1,6 @@
 #include <iostream>
 using namespace std;
 
-//Template
-template <typename A>
-A swap(A x, A y)
-{
-    A t;
-    t = x;
-    x = y;
-    y = t;
-    cout << endl;
-    return x, y;
-    cout << endl;
-};
-
-
 //inheritance, constructor destructor.
 class laptop
 {
@@ -76,6 +62,19 @@ class display : public laptop{
         expense = l + 1000;
         cout<<"display expenses : "<<expense<<endl;
     }
+};
+
+//Template
+template <typename A>
+A swap(A x, A y)
+{
+    A t;
+    t = x;
+    x = y;
+    y = t;
+    cout << endl;
+    return x, y;
+    cout << endl;
 };
 
 //Operator Overloading
