@@ -1,207 +1,128 @@
 #include <iostream>
-#include<string>
 using namespace std;
-class Books
+
+//Template
+template <typename A>
+A swap(A x, A y)
+{
+    A t;
+    t = x;
+    x = y;
+    y = t;
+    cout << endl;
+    return x, y;
+    cout << endl;
+};
+
+
+//inheritance, constructor destructor.
+class laptop
 {
 	public:
-		int id, count;
-		double price;
-		string author, name;
-		void input()
-		{
-			cout<<"Enter the details of the book:"<<endl;
-			cout<<"ID: "<<endl;
-			cin>> id;
-			cout<<"NAME:"<<endl;
-			cin>>name;
-			cout<<"PRICE: "<< endl;
-			cin>> price;
-			cout<<"NAME OF AUTHOR: "<<endl;
-			cin>>author;
-			cout<<"THE QUANTITY: "<<endl;
-			cin>>count;
-		}
-		void display()
-		{
-			cout<<"ORIGINAL DETAILS OF THE BOOK:"<<endl;
-			cout<<"ID:"<< id<<"\n NAME:"<< name<< "\n ORIGINAL PRICE: "<<price<<"\n AUTHOR: "<<author<<"\n COUNT: "<<count<<endl;
-
-		}
+		int expense=0;
 
 };
-class Supplier: public Books
+
+class battery : public laptop{
+
+        public:
+
+            int b,price;
+			battery(int x)
+			{
+
+                b=x;
+			}
+			void output()
+			{
+				price = b + 1000; 
+				expense+=price;
+				cout<<"Price of replacing battery is :"<<expense<<endl;
+			}
+};
+
+
+class motherBoard:public laptop{
+
+		private:
+            int m;
+        public:
+
+			motherBoard(int a)
+			{
+				m = a;
+			}
+            void calculate()
+			{
+
+				expense = m + 1000;
+				cout<<"Price of motherboard :"<<expense<<endl;
+			}
+            ~motherBoard(){
+                cout<<"destructor invoked";
+            }
+};
+
+class display : public laptop{
+    private:
+        int l;
+    public:
+    display(int a1){
+        l = a1;
+
+    }
+    void get(){
+
+        expense = l + 1000;
+        cout<<"display expenses : "<<expense<<endl;
+    }
+};
+
+//Operator Overloading
+class count{
+    private:
+    int c;
+    public:
+    count(){c=0;}
+    count operator ++()
+    {
+        count temp;
+        temp.c=++c;
+        return temp;
+    }
+    count operator--(){
+        count temp;
+        temp.c=c--;
+        return temp;
+    }
+    int get()
+    {
+        return c;
+    }
+};
+
+int main()
 {
-	public:
-		int change;
-		double new_price;
-		void check()
-		{
-			cout<<"Do you want to make any modifications to the price of the book you are selling?"<<endl;
-			cout<<"Enter 0 for no and 1 for yes"<<endl;
-			cin>>change;
-			switch(change)
-			{
-				case 0: cout<<"No changes are being made to the book's price and being supplied"<<endl;
-				break;
-				case 1: cout<<"What is the price for which you wish to sell the book?"<<endl;
-				cout<<"REMEMBER: WE DON'T BUY BOOKS AT A COST WHICH EXCEEDS THEIR MRP BY 100 RUPPEES"<<endl;
-				cin>>new_price;
-				if(new_price>price)
-				{
-					if((new_price-price)>100)
-					{
-					cout<<"SORRY. WE DO NOT ACCEPT THE PROPOSED PRICE AND ARE NOT BUYING THE BOOK"<<endl;
-					count=0;
-				}
-				else
-				price=new_price;
-			}
-			else
-			price=new_price;
-			break;
-			default: cout<<"Wrong option chosen. We are considering there are no changes in the pricing and the book is considered supplied at its original price "<<endl;
-				}
 
+    battery b(10000);
+    motherBoard m(5000);
+    display d(1000);
+    b.output();
+    m.calculate();
+    d.get();
 
-			}
-			void show(){
-				cout<< "UPDATED PRICE OF THE BOOK NOW: "<<new_price;
-			}
-		};
-		class Buyer
-		{
-			public:
-			int bID;
-			void getId()
-			{
-			cout<<"Enter the id of the book you want to buy:"<<endl;
-			cin>>bID;
-		}
-		};
-		class Rent
-		{
-			public:
-				int rID;
-			void getrId()
-			{
-			cout<<"Enter the id of the book you want to rent:"<<endl;
-			cin>>rID;
-		}};
-		class ReturnBook
-		{
-		public:
-			int d;
-			void ret()
-			{
-			cout<<"How many days later are you returning the book?"<<endl;
-			cin>>d;
-			if(d>15)
-			cout<<"You have to pay a fine of 100 ruppees"<<endl;
-			else
-			cout<<"Thank you for returning the book on time"<<endl;	
-			}
+    cout << swap<int>(4, 5)<<endl;
 
-		};
-		int main()
-		{
-			cout<<"Enter an option from below:"<<endl;
-			cout<<"1: SUPPLY A BOOK"<<endl;
-			cout<<"2: BUY A BOOK"<<endl;
-			cout<<"3:RENT A BOOK"<<endl;
-			cout<<"4: RETURN BOOK(PREVIOUSLY RENTED)"<<endl;
-			cout<<"5. EXIT"<<endl;
-			int op;
-			cin>>op;
-			Books ob[150];
-			Supplier s;
-			Buyer b;
-			Rent r;
-			ReturnBook R;
-			int i=0;
-			do
-			{
-			switch(op)
-			{
-				case 1:ob[i].input();
-				ob[i].display();
-				s.check();
-				s.show();
-				i++;
-				break;
-				case 2:
-				{
-				  b.getId();
-				int j=i;
-				while(j!=-1)
-				{
-					if( ob[i].id==b.bID)
-					{
-						if(ob[j].count!=0)
-						{
-						cout<<"SOLD TO YOU"<<endl;
-						ob[j].count--;
-						ob[j].display();
-						}
-						else
-						cout<<"Sorry not in stock"<<endl;
+    count a;
+    cout<<"Initial number of people inside the bank="<<a.get()<<endl;
+    ++a;
+    ++a;
+    ++a;
+    ++a;
+    cout<<"No. of people in the bank="<<a.get()<<endl;
+    --a;
+    --a;
+    --a;
+    cout<<"No. of people in the bank after people left the bank="<<a.get()<<endl;
 
-					}
-					else
-					cout<<"Sorry we do not have that book"<<endl;
-					j--;
-					}
-			}
-
-		break;
-
-		case 3: {
-
-		r.getrId();
-			int j=i;
-				while(j!=-1)
-				{
-					if( ob[j].id==r.rID)
-					{
-						if(ob[j].count!=0)
-						{
-						cout<<"RENTED TO YOU"<<endl;
-						ob[j].count--;
-						ob[j].display();
-						}
-						else
-						cout<<"Sorry not in stock"<<endl;
-
-					}
-					else
-					cout<<"Sorry we do not have that book"<<endl;
-					j--;
-					}}
-					break;
-					case 4:{
-						cout<<"STATE THE BOOK ID OF THE BOOK YOU ARE RETURNING"<<endl;
-					int b_id;
-					cin>>b_id;
-					int j=i;
-					while(j!=-1)
-					{
-						if(ob[j].id==b_id)
-						{
-
-						ob[j].count++;
-						cout<<"Book returned succesfully"<<endl;
-						ob[j].display();
-					}
-						else
-						cout<<"Wrong id"<<endl;
-					j--;	
-					}
-					R.ret();}
-					break;
-					default:cout<<"Wrong option. Try Again"<<endl;
-					}
-
-				}while(op!=5);
-				return 0;
-			}
-
-            
+}
